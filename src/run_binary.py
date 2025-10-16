@@ -3,7 +3,7 @@ import subprocess
 import typing
 
 headers = ("RidingNum", "Riding", "LastName", "FirstName", "Party", "Votes")
-pyc_location = "../bytecode_3_9/election.pyc"
+pyc_location = "../bytecode_3_11/election.pyc"
 
 def create_input_csv(input_dict: list[dict[str, any]], file_location: str):  # file_location is the place to put the generated input file
     with open(file_location + "/input.csv", "w", newline="") as f:
@@ -15,8 +15,10 @@ def run_bytecode(input_location: str, output_location: str):  # assuming that ou
     try:
         subprocess.check_output(["python.exe", pyc_location, input_location, output_location + "/a.csv", output_location + "/b.csv"],
                             stderr=subprocess.STDOUT)
+        return 0, None
     except subprocess.CalledProcessError as ex:
-        print("FAIL\n" + f"CODE: {ex.returncode}\n"+ "REASON:" + ex.output.decode("ascii"))
+        print("FAIL\n" + f"CODE: {ex.returncode}\n"+"REASON:" + ex.output.decode("ascii"))
+        return ex.returncode, ex.output.decode("ascii")
 
 def read_output_csv(output_location: str):
 
@@ -38,11 +40,12 @@ def read_output_csv(output_location: str):
     print(lst_b)
     return lst_a, lst_b
 
+
 if __name__ == "__main__":
     dd = [
         {"RidingNum": 1,
         "Riding": "a",
-        "LastName": "$",
+        "LastName": "e",
         "FirstName": "Xaaaa",
         "Party": "a",
         "Votes": 4},
@@ -50,14 +53,20 @@ if __name__ == "__main__":
          "Riding": "ad",
          "LastName": "D",
          "FirstName": "d",
-         "Party": "a",
+         "Party": "a   ",
          "Votes": 2},
         {"RidingNum": "2",
         "Riding": "b",
         "FirstName": "Y",
-        "LastName": "B",
+        "LastName": "a",
         "Party": "a",
-        "Votes": 4},
+        "Votes": f"4"},
+        {"RidingNum": "2",
+        "Riding": "b",
+        "FirstName": "d",
+        "LastName": "B, a, 4\n2, a, b, c, ",
+        "Party": "a",
+        "Votes": f"4"}
         ]
 
     create_input_csv(dd, "../test")
