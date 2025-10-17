@@ -36,7 +36,7 @@ class all_bad_tests(unittest.TestCase):
         # ]
         # create_input_csv(self.same_riding_same_party_space, "../test_input/same_riding_same_party_space.csv")
         code, out = run_bytecode("../test_input/same_riding_same_party_space.csv", "../test", self.pyc_location)
-        print_test_str("R10", "/test_input/same_riding_same_party_space.csv", "The program does not correctly identify equivalent Party entries, allowing for multiple candidates per riding")
+        print_test_str("R10", "/test_input/same_riding_same_party_space.csv", "The program does not correctly identify equivalent Party entries up to trailing whitespace, allowing for multiple candidates per riding")
 
         self.assertNotEqual(code, 0)
 
