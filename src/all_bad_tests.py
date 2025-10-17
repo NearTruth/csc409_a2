@@ -27,7 +27,7 @@ class federal_csv_tests(unittest.TestCase):
         # ]
         # create_input_csv(self.same_riding_same_party_space, "../bad_examples/same_riding_same_party_space.csv")
         code, out = run_bytecode("../bad_examples/same_riding_same_party_space.csv", "../test", pyc_location)
-        print_test_str("R10", "", "The program does not correctly identify equivalent Party entries, allowing for multiple candidates per riding")
+        print_test_str("R10", "/bad_examples/same_riding_same_party_space.csv", "The program does not correctly identify equivalent Party entries, allowing for multiple candidates per riding")
 
         self.assertNotEqual(code, 0)
 
@@ -60,7 +60,7 @@ class federal_csv_tests(unittest.TestCase):
         # ]
         # create_input_csv(self.bad_fname_bad_error_message, "../bad_examples/bad_fname_bad_error_message.csv")
         code, out = run_bytecode("../bad_examples/bad_fname_bad_error_message.csv", "../test", pyc_location)
-        print_test_str("R11", "", "The program does not identify correctly the row where the problem occurs")
+        print_test_str("R11", "/bad_examples/bad_fname_bad_error_message.csv", "The program does not identify correctly the row where the problem occurs")
 
         self.assertNotEqual(code, 0)
         self.assertIn("Row 4", out)
@@ -83,7 +83,7 @@ class federal_csv_tests(unittest.TestCase):
         #
         # create_input_csv(self.bad_l_name, "../bad_examples/bad_l_name.csv")
         code, out = run_bytecode("../bad_examples/bad_l_name.csv", "../test", pyc_location)
-        print_test_str("R5", "", "The program does not identify invalid characters in the LastName field")
+        print_test_str("R5", "/bad_examples/bad_l_name.csv", "The program does not identify invalid characters in the LastName field")
 
         self.assertNotEqual(code, 0)
 
@@ -99,7 +99,7 @@ class federal_csv_tests(unittest.TestCase):
         # ]
         # create_input_csv(self.type_csv, "../bad_examples/type_csv.csv")
         code, out = run_bytecode("../bad_examples/type_csv.csv", "../test", pyc_location)
-        print_test_str("R11, R12", "", "The program throws a TypeError when there are only \"independent\" entries under Party")
+        print_test_str("R11, R12", "/bad_examples/type_csv.csv", "The program throws a TypeError when there are only \"independent\" entries under Party")
 
         self.assertEqual(code, 0)
 
@@ -148,7 +148,7 @@ class federal_csv_tests(unittest.TestCase):
                 role_work = line["Role"]
             if line["Party"] == "school":
                 role_school = line["Role"]
-        print_test_str("R29", "", "The program does not correctly output \"government (minority)\" under Role in federal_results.csv")
+        print_test_str("R29", "/bad_examples/minority_indep_equals_main_party.csv", "The program does not correctly output \"government (minority)\" under Role in federal_results.csv")
 
         self.assertEqual(role_work, "government (minority)")
         self.assertEqual(role_school, "official opposition")
@@ -214,7 +214,7 @@ class federal_csv_tests(unittest.TestCase):
         # run_binary.create_input_csv(input, "../bad_examples/number_with_space_before_riding.csv")
         code, reason = run_binary.run_bytecode("../bad_examples/number_with_space_before_riding.csv", "../test", pyc_location)
         # ride_level, fed_level = run_binary.read_output_csv("../test")
-        print_test_str("R4", "", "The program does not correctly detect the leading whitespace in the RidingNum field")
+        print_test_str("R4", "/bad_examples/number_with_space_before_riding.csv", "The program does not correctly detect the leading whitespace in the RidingNum field")
 
         self.assertEqual(code, 1)
 
@@ -279,7 +279,7 @@ class federal_csv_tests(unittest.TestCase):
         # run_binary.create_input_csv(input, "../bad_examples/riding_clash_caps.csv")
         code, reason = run_binary.run_bytecode("../bad_examples/riding_clash_caps.csv", "../test", pyc_location)
         # ride_level, fed_level = run_binary.read_output_csv("../test")
-        print_test_str("R13, R8", "", "It is possible to create two rows with the same entry in Riding, but not in RidingNum")
+        print_test_str("R13, R8", "/bad_examples/riding_clash_caps.csv", "It is possible to create two rows with equivalent entries in Riding by inserting a space in the middle of an entry, but have the RidingNum be different")
 
         self.assertEqual(code, 1)
 
@@ -345,7 +345,7 @@ class federal_csv_tests(unittest.TestCase):
         # run_binary.create_input_csv(input, "../bad_examples/riding_clash_bad_integer.csv")
         code, reason = run_binary.run_bytecode("../bad_examples/riding_clash_bad_integer.csv", "../test", pyc_location)
         # ride_level, fed_level = run_binary.read_output_csv("../test")
-        print_test_str("R13, R8", "", "The program does not correctly handle leading zeros in the RidingNum field, we can create two different Ridings for the same RidingNum")
+        print_test_str("R13, R8", "/bad_examples/riding_clash_bad_integer.csv", "The program does not correctly handle leading zeros in the RidingNum field, we can create two different Ridings for the same RidingNum")
 
         self.assertEqual(code, 1)
 
@@ -416,7 +416,7 @@ class federal_csv_tests(unittest.TestCase):
         # run_binary.create_input_csv(input, "../bad_examples/one_candidate_caps.csv")
         code, reason = run_binary.run_bytecode("../bad_examples/one_candidate_caps.csv", "../test", pyc_location)
         # ride_level, fed_level = run_binary.read_output_csv("../test")
-        print_test_str("R13, R8", "", "The program incorrectly allows for multiple Parties with equivalent names")
+        print_test_str("R13, R8", "/bad_examples/one_candidate_caps.csv", "The program incorrectly allows for multiple Parties with equivalent names")
 
         self.assertEqual(code, 1)
 
@@ -482,7 +482,7 @@ class federal_csv_tests(unittest.TestCase):
         # run_binary.create_input_csv(input, "../bad_examples/vote_total_no_votes.csv")
         code, reason = run_binary.run_bytecode("../bad_examples/vote_total_no_votes.csv", "../test", pyc_location)
         # ride_level, fed_level = run_binary.read_output_csv("../test")
-        print_test_str("R11, R12", "", "The program throws a ValueError when all Votes are 0 instead of terminating ")
+        print_test_str("R11, R12", "/bad_examples/vote_total_no_votes.csv", "The program throws a ValueError when all Votes are 0 instead of terminating ")
 
         self.assertEqual(code, 0)
 
@@ -514,7 +514,7 @@ class federal_csv_tests(unittest.TestCase):
         ride_level, fed_level = run_binary.read_output_csv("../test")
         for line in ride_level:
             if line["RidingNum"] == "1":
-                print_test_str("R17", "",
+                print_test_str("R17", "/bad_examples/outcome_only_recount_on_point.csv",
                                "The program incorrectly outputs \"plurality\" under the Outcome in riding_result.csv instead of \"recount\"")
 
                 self.assertEqual(line["Outcome"], "Recount")

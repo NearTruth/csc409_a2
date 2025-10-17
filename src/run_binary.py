@@ -3,21 +3,21 @@ import subprocess
 import typing
 
 headers = ("RidingNum", "Riding", "LastName", "FirstName", "Party", "Votes")
-pyc_location = "../bytecode_3_11/election.pyc"
+# pyc_location = "../bytecode_3_9/election.pyc"
 
 def create_input_csv(input_dict: list[dict[str, any]], file_location: str):  # file_location is the place to put the generated input file
-    with open(file_location + "/input.csv", "w", newline="") as f:
+    with open(file_location, "w", newline="") as f:
         csv_writer = csv.DictWriter(f, fieldnames=headers)
         csv_writer.writeheader()
         csv_writer.writerows(input_dict)
 
-def run_bytecode(input_location: str, output_location: str):  # assuming that output location is the same as where the input.csv is
+def run_bytecode(input_location: str, output_location: str, pyc_location: str):  # assuming that output location is the same as where the input.csv is
     try:
         subprocess.check_output(["python.exe", pyc_location, input_location, output_location + "/a.csv", output_location + "/b.csv"],
                             stderr=subprocess.STDOUT)
         return 0, None
     except subprocess.CalledProcessError as ex:
-        print("FAIL\n" + f"CODE: {ex.returncode}\n"+"REASON:" + ex.output.decode("ascii"))
+        # print("FAIL\n" + f"CODE: {ex.returncode}\n"+"REASON:" + ex.output.decode("ascii"))
         return ex.returncode, ex.output.decode("ascii")
 
 def read_output_csv(output_location: str):
@@ -31,13 +31,10 @@ def read_output_csv(output_location: str):
         reader = csv.DictReader(f)
         for row in reader:
             lst_a.append(row)
-
-    print(lst_a)
     with open(output_location+ "/b.csv", "r") as f:
         reader = csv.DictReader(f)
         for row in reader:
             lst_b.append(row)
-    print(lst_b)
     return lst_a, lst_b
 
 
@@ -61,17 +58,17 @@ if __name__ == "__main__":
         "LastName": "a",
         "Party": "a",
         "Votes": f"4"},
-        {"RidingNum": "2",
-        "Riding": "b",
+        {"RidingNum": "6",
+        "Riding": "y",
         "FirstName": "d",
-        "LastName": "B, a, 4\n2, a, b, c, ",
+        "LastName": "B",
         "Party": "a",
         "Votes": f"4"}
         ]
 
     create_input_csv(dd, "../test")
     run_bytecode("../test/input.csv", "../test")
-    read_output_csv("../test")
+    print(read_output_csv("../test"))
 
 
 
