@@ -354,7 +354,7 @@ class all_bad_tests(unittest.TestCase):
         # run_binary.create_input_csv(input, "../test_input/riding_clash_bad_integer.csv")
         code, reason = run_binary.run_bytecode("../test_input/riding_clash_bad_integer.csv", "../test", self.pyc_location)
         # ride_level, fed_level = run_binary.read_output_csv("../test")
-        print_test_str("R13, R8", "/test_input/riding_clash_bad_integer.csv", "The program does not correctly handle leading zeros in the RidingNum field, we can create two different Ridings for the same RidingNum")
+        print_test_str("R8", "/test_input/riding_clash_bad_integer.csv", "The program does not correctly handle leading zeros in the RidingNum field, we can create two different Ridings for the same RidingNum")
 
         self.assertEqual(code, 1)
 
